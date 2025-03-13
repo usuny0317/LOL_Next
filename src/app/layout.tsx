@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Link from "next/link";
+import { QueryClientProvider } from "@tanstack/react-query";
+import QueryProvider from "./api/query";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -45,7 +47,9 @@ export default function RootLayout({
             </Link>
           </div>
         </div>
-        <div className="pt-20">{children}</div>
+        <div className="pt-20">
+          <QueryProvider>{children}</QueryProvider>
+        </div>
       </body>
     </html>
   );
