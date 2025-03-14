@@ -10,7 +10,7 @@ const Page = async () => {
       <div className=" grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-5 p-5 m-2">
         {data?.map((da) => (
           <Card {...da} key={da.id} />
-        ))}{" "}
+        ))}
       </div>
     </div>
   );
