@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Link from "next/link";
-import { QueryClientProvider } from "@tanstack/react-query";
 import QueryProvider from "./api/query";
 
 const geistSans = localFont({
@@ -31,7 +30,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="absolute top-0 left-0 right-0 bg-blue-900">
+        <header className="fixed top-0 left-0 right-0 bg-blue-900">
           <div className="flex gap-10 m-4 w-full">
             <Link href={"/"} className="flex-1 text-center text-white">
               홈
@@ -46,7 +45,7 @@ export default function RootLayout({
               챔피언 로테이션
             </Link>
           </div>
-        </div>
+        </header>
         <div className="pt-20">
           <QueryProvider>{children}</QueryProvider>
         </div>

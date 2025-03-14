@@ -1,44 +1,17 @@
-"use client";
-import { useQuery } from "@tanstack/react-query";
+import Card from "@/components/Card";
+import { fetchChanpionList } from "@/utils/fetchChanpionList";
 
-interface Champion {
-  id: string;
-  key: string;
-  name: string;
-  title: string;
-  blurb: string;
-}
+const Page = async () => {
+  const data = await fetchChanpionList();
 
-const Page = () => {
-  const { data, isPending, isError, error } = useQuery({
-    queryKey: ["champions"],
-    queryFn: async () => {
-      const response = await fetch(
-        "https://ddragon.leagueoflegends.com/cdn/14.4.1/data/ko_KR/champion.json"
-      );
-
-      if (!response.ok) {
-        throw new Error("데이터를 불러오는 데 실패했습니다.");
-      }
-
-      const jsonData = await response.json();
-      console.log(Object.values(jsonData.data));
-      return Object.values(jsonData.data) as Champion[];
-    },
-  });
-  if (isPending) return <div>Loading...</div>;
-  if (isError) return <div>Error!</div>;
-  //console.log(data);
   return (
     <div>
-      챔피언 page
-      {data?.map((da, index) => (
-        <div key={index}>
-          <p>{da.name}</p>
-          <p>{da.title}</p>
-          <p>{da.blurb}</p>
-        </div>
-      ))}
+      <p className="text-red-500 ml-5">챔피언 목록</p>
+      <div className=" grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-5 p-5 m-2">
+        {data?.map((da) => (
+          <Card {...da} key={da.id} />
+        ))}{" "}
+      </div>
     </div>
   );
 };
