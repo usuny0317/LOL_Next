@@ -1,14 +1,9 @@
 import ItemCard from "@/components/ItemCard";
-import { Item } from "@/types/Item";
+import { fetchItemList } from "@/utils/serverApi";
 
 const page = async () => {
   //ssg
-  const response = await fetch(
-    "https://ddragon.leagueoflegends.com/cdn/15.5.1/data/ko_KR/item.json",
-    { cache: "force-cache" }
-  );
-  const jsonData = await response.json();
-  const data: Item[] = Object.values(jsonData.data);
+  const data = await fetchItemList();
 
   return (
     <div>

@@ -1,5 +1,5 @@
 import Card from "@/components/Card";
-import { fetchChanpionList } from "@/utils/fetchChanpionList";
+import { fetchChanpionList } from "@/utils/serverApi";
 
 const Page = async () => {
   const data = await fetchChanpionList();

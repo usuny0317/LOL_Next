@@ -1,5 +1,6 @@
 //import { Champion } from "@/types/Champion";
-import { fetchChanpionDetail } from "@/utils/fetchChampionDetail";
+
+import { fetchChanpionDetail } from "@/utils/serverApi";
 import Image from "next/image";
 import React from "react";
 
