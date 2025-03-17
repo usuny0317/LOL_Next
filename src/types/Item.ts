@@ -1,3 +1,9 @@
 export type Item = {
-  "": string;
+  name: string;
+  description: string;
+  image: { full: string };
+  gold: {
+    base: number;
+    sell: number;
+  };
 };

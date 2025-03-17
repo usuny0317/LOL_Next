@@ -4,4 +4,13 @@ export type Champion = {
   name: string;
   title: string;
   blurb: string;
+  image: { full: string };
+  spells: [
+    {
+      id: string;
+      name: string;
+      description: string;
+      image: { full: string };
+    }
+  ];
 };
