@@ -1,10 +1,7 @@
-//import { Champion } from "@/types/Champion";
-
 import { fetchChanpionDetail } from "@/utils/serverApi";
 import Image from "next/image";
 import React from "react";
 
-/* */
 //params를 받아온다. 그런데 그 params의 타입이 params: {id:string} 이다.
 const Detailpage = async ({ params }: { params: { id: string } }) => {
   const decodeid = decodeURIComponent(params.id);
@@ -24,14 +21,13 @@ const Detailpage = async ({ params }: { params: { id: string } }) => {
       <br />
       <p className="text-red-300"> {finddata?.name}의 스킬</p>
       <div className="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-1">
-        {finddata.spells.map((spell) => {
+        {finddata?.spells.map((spell) => {
           return (
             <div
               key={spell.id}
-              className="border-white-100 border-2 m-5 text-red-500 "
+              className="border-white-100 border-2 m-5 p-2 text-red-500 flex flex-col item-center justify-center"
             >
               <p>{spell.name}</p>
-              <p>{spell.image.full}</p>
               <Image
                 src={`https://ddragon.leagueoflegends.com/cdn/14.5.1/img/spell/${spell.image.full}`}
                 alt={`${spell.name}`}

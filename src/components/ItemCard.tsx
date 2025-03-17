@@ -8,7 +8,7 @@ const stripSpecialCharacters = (text: string) => {
 
 const ItemCard = (da: Item) => {
   return (
-    <div className="display-flex items-center justify-center text-center w-45 max-h-[350px] overflow-y-auto border-white-100 border-2 ">
+    <div className="flex flex-col items-center text-center w-45 max-h-[350px] overflow-y-auto border-white-100 border-2 ">
       <Image
         src={`https://ddragon.leagueoflegends.com/cdn/15.5.1/img/item/${da.image.full}`}
         alt={`${da.name}`}

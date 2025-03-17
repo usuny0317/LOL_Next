@@ -1,3 +1,7 @@
+import Card from "@/components/Card";
+import { Champion } from "@/types/Champion";
+import { Rotaition } from "@/types/ChampionRotaion";
+import { fetchChanpionList } from "@/utils/serverApi";
 import React from "react";
 
 const page = async () => {
@@ -13,27 +17,37 @@ const page = async () => {
       },
     }
   );
-  const data = await response.json();
-  console.log(data);
+  const data: Rotaition = await response.json();
+
+  const fetchChanpionList = async () => {
+    const response = await fetch(
+      "https://ddragon.leagueoflegends.com/cdn/14.5.1/data/ko_KR/championFull.json",
+      { cache: "no-store" }
+    );
+    if (!response) {
+      throw new Error("리스트 데이터를 불러오지 못했습니다.");
+    }
+    const jsonData = await response.json();
+    const data: Champion[] = Object.values(jsonData.data);
+    return data;
+  };
+  const alldata = await fetchChanpionList();
+  const filterdata = alldata.filter((da) =>
+    data.freeChampionIds.includes(Number(da.key))
+  );
   //결과값이 id로 나온다.
 
-  /*  
-  useclient 하고 CSR 하래래
-  const { data, isPending, isError } = useQuery({
-    queryKey: ["champions"],
-    queryFn: async () => {
-      const response = await fetch(
-        "https://ddragon.leagueoflegends.com/cdn/14.5.1/data/ko_KR/champion.json",
-        { next: { revalidate: 1 } }
-      );
-      const jsonData = await response.json();
-      return Object.values(jsonData.data) as Champion[];
-    },
-  });
-  if (isPending) return <div>Loading...</div>;
-  if (isError) return <div>Error!</div>; */
-
-  return <div>로테이션 page</div>;
+  return (
+    <div>
+      {" "}
+      <p className="text-red-500 ml-5">이번주 무료 챔피언 목록</p>
+      <div className=" grid grid-cols-4 grid-rows-4 gap-5 p-5 m-2">
+        {filterdata?.map((da) => (
+          <Card {...da} key={da.id} />
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default page;

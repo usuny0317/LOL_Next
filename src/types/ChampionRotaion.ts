@@ -1,3 +1,5 @@
 export type Rotaition = {
-  "": string;
+  freeChampionIds: [number];
+  freeChampionIdsForNewPlayers: [number];
+  maxNewPlayerLevel: number;
 };

@@ -1,4 +1,5 @@
 "use client";
+
 import { Champion } from "@/types/Champion";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -11,7 +12,7 @@ const Card = (da: Champion) => {
   };
   return (
     <div
-      className="display-flex items-center justify-center text-center w-40 h-50  border-white-100 border-2"
+      className="flex flex-col items-center justify-center text-center w-50 h-50  border-white-100 border-2"
       onClick={() => {
         handleDetail(da.id);
       }}
@@ -23,7 +24,7 @@ const Card = (da: Champion) => {
         height={300}
       />
       <div className="text-red-500 p-2"> {da.name}</div>
-      <p>{da.title}</p>
+      <p className="text-gray-500">{da.title}</p>
     </div>
   );
 };

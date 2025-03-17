@@ -31,7 +31,6 @@ export const fetchChanpionDetail = async (decodeid: string) => {
   const response = await fetch(
     "https://ddragon.leagueoflegends.com/cdn/14.5.1/data/ko_KR/championFull.json",
     { cache: "no-store" }
-
     //ssr 사용
   );
   if (!response) {
