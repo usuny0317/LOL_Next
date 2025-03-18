@@ -2,23 +2,19 @@
 
 import Card from "@/components/Card";
 import { Champion } from "@/types/Champion";
-import { Rotaition } from "@/types/ChampionRotaion";
+import { useQuery } from "@tanstack/react-query";
 
-const page = async () => {
-  //https://developer.riotgames.com/apis#champion-v3/GET_getChampionInfo
-  //https://br1.api.riotgames.com/lol/platform/v3/champion-rotations?api_key=RGAPI-74eadb3c-8a5f-4a05-aadc-f18775cd047d
-  const response = await fetch(
-    `https://br1.api.riotgames.com/lol/platform/v3/champion-rotations?api_key=${process.env.RIOT_API_KEY}`,
-    {
+const page = () => {
+  //로테이션 받아오기기
+  const fetchLotaition = async () => {
+    const response = await fetch("api/handleroute", {
       method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept-Language": "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7",
-      },
-    }
-  );
-  const data: Rotaition = await response.json();
+    });
+    const result = await response.json();
+    return result;
+  };
 
+  //전체 리스트 받아오기기
   const fetchChanpionList = async () => {
     const response = await fetch(
       "https://ddragon.leagueoflegends.com/cdn/14.5.1/data/ko_KR/championFull.json",
@@ -31,20 +27,56 @@ const page = async () => {
     const data: Champion[] = Object.values(jsonData.data);
     return data;
   };
-  const alldata = await fetchChanpionList();
-  const filterdata = alldata.filter((da) =>
-    data.freeChampionIds.includes(Number(da.key))
-  );
-  //결과값이 id로 나온다.
 
-  return (
-    <div>
-      <p className="text-red-500 ml-5">이번주 무료 챔피언 목록</p>
+  //쿼리 사용해서 비교하기기
+  const CompareLotaitionList = () => {
+    //쿼리로 로테이션
+    const {
+      data: lotation,
+      isPending: islotationPending,
+      isError: islotationErr,
+    } = useQuery({
+      queryKey: ["lotation"],
+
+      queryFn: async () => {
+        const data = await fetchLotaition();
+        return data.data.freeChampionIds;
+      },
+    });
+    //쿼리로 리스트
+    const {
+      data: list,
+      isPending: islistPending,
+      isError: islistErr,
+    } = useQuery({
+      queryKey: ["list"],
+      //queryFn: fetchChanpionList,
+      queryFn: async () => {
+        const data = await fetchChanpionList();
+        return data;
+      },
+    });
+
+    //둘 중 하나라도 받아오기 전일때
+    if (islotationPending || islistPending) return <div>Loding...</div>;
+    //둘 중 하나라도 오류났을 때
+    if (islotationErr || islistErr) return <div>Error!!!</div>;
+    //둘 값 비교해서 돌려주기
+    const filterdata = list.filter((da) => lotation?.includes(Number(da.key)));
+
+    return (
       <div className=" grid grid-cols-4 grid-rows-4 gap-5 p-5 m-2">
         {filterdata?.map((da) => (
           <Card {...da} key={da.id} />
         ))}
       </div>
+    );
+  };
+
+  return (
+    <div>
+      <p className="text-red-500 ml-5">이번주 무료 챔피언 목록</p>
+      {CompareLotaitionList()}
     </div>
   );
 };
