@@ -1,8 +1,8 @@
+"use client";
+
 import Card from "@/components/Card";
 import { Champion } from "@/types/Champion";
 import { Rotaition } from "@/types/ChampionRotaion";
-import { fetchChanpionList } from "@/utils/serverApi";
-import React from "react";
 
 const page = async () => {
   //https://developer.riotgames.com/apis#champion-v3/GET_getChampionInfo
@@ -39,7 +39,6 @@ const page = async () => {
 
   return (
     <div>
-      {" "}
       <p className="text-red-500 ml-5">이번주 무료 챔피언 목록</p>
       <div className=" grid grid-cols-4 grid-rows-4 gap-5 p-5 m-2">
         {filterdata?.map((da) => (
