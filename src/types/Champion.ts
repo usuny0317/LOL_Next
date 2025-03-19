@@ -14,3 +14,5 @@ export type Champion = {
     }
   ];
 };
+
+export type ChampionCard = Pick<Champion, "id" | "name" | "title" | "image">;

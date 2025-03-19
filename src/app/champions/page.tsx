@@ -6,7 +6,7 @@ const Page = async () => {
 
   return (
     <div>
-      <p className="text-red-500 ml-5">챔피언 목록</p>
+      <p className="text-red-500 ml-5 text-xl">챔피언 목록</p>
       <div className=" grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-5 p-5 m-2">
         {data?.map((da) => (
           <Card {...da} key={da.id} />

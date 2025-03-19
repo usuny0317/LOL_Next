@@ -1,11 +1,11 @@
 "use client";
 
-import { Champion } from "@/types/Champion";
+import { ChampionCard } from "@/types/Champion";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-const Card = (da: Champion) => {
+const Card = (da: ChampionCard) => {
   const router = useRouter();
   const handleDetail = (id: string) => {
     router.push(`/champions/${encodeURIComponent(id)}`);

@@ -2,10 +2,11 @@
 
 import Card from "@/components/Card";
 import { Champion } from "@/types/Champion";
+
 import { useQuery } from "@tanstack/react-query";
 
 const page = () => {
-  //로테이션 받아오기기
+  //라우트 핸들러로 로테이션 받아오기기
   const fetchLotaition = async () => {
     const response = await fetch("api/handleroute", {
       method: "GET",
@@ -37,7 +38,6 @@ const page = () => {
       isError: islotationErr,
     } = useQuery({
       queryKey: ["lotation"],
-
       queryFn: async () => {
         const data = await fetchLotaition();
         return data.data.freeChampionIds;
@@ -75,7 +75,7 @@ const page = () => {
 
   return (
     <div>
-      <p className="text-red-500 ml-5">이번주 무료 챔피언 목록</p>
+      <p className="text-red-500 ml-5 text-xl">이번주 무료 챔피언 목록</p>
       {CompareLotaitionList()}
     </div>
   );
